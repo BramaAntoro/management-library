@@ -20,7 +20,7 @@ class Book extends Model
         'quantity'
     ];
 
-    public function categories(): BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
