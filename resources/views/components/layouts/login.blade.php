@@ -5,23 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>{{ $title ?? 'Page Title' }}</title>
+    <title>{{ $title ?? 'Login'}}</title>
 </head>
 
 <body>
-    <div class="d-flex">
 
-        @include('components.layouts.sidebar')
-
-        <div class="flex-grow-1 p-4">
-
-            @include('components.layouts.navigation') 
-
-            {{ $slot }} 
-        </div>
-
-    </div>
-
+    {{ $slot }}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
