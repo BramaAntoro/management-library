@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\BookComponent;
 use App\Livewire\CategoryComponent;
 use App\Livewire\HomeComponent;
 use App\Livewire\LoginComponent;
@@ -18,3 +19,4 @@ Route::get('/member', MemberComponent::class)->name('member')->middleware('auth'
 
 Route::get('/categories', CategoryComponent::class)->name('category')->middleware('auth');
 
+Route::get('/books', BookComponent::class)->name('book')->middleware('auth');
