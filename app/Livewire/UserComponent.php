@@ -13,9 +13,8 @@ class UserComponent extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $id, $name, $email, $phone_number, $password, $search;
+    public $id, $name, $email, $password, $search;
 
-    // Reset pagination ketika search berubah
     public function updatedSearch()
     {
         $this->resetPage();
@@ -24,14 +23,16 @@ class UserComponent extends Component
     public function render()
     {
         $layout['title'] = 'Manage user';
-        
+
+        $query = User::where('role', 'admin');
+
         if (!empty($this->search)) {
-            $data['users'] = User::where('name', 'like', '%' . $this->search . '%')->paginate(5);
-        } else {
-            $data['users'] = User::paginate(5);
+            $query->where('name', 'like', '%' . $this->search . '%');
         }
-        
-        return view('livewire.user-component', $data)->layoutData($layout);
+
+        $data['users'] = $query->paginate(5);
+
+        return view('livewire.user-component',$data)->layoutData($layout);
     }
 
     public function store()
@@ -39,62 +40,56 @@ class UserComponent extends Component
         $this->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'phone_number' => 'required|string|max:20',
             'password' => 'required|min:6'
         ]);
 
         User::create([
             'name' => $this->name,
             'email' => $this->email,
-            'phone_number' => $this->phone_number,
-            'password' => bcrypt($this->password), 
+            'password' => bcrypt($this->password),
             'role' => 'admin'
         ]);
 
         session()->flash('success', 'Admin has been saved successfully');
-        $this->reset(['name', 'email', 'phone_number', 'password']);
+        $this->reset(['name', 'email', 'password']);
     }
 
     public function update($id)
     {
         $user = User::find($id);
-        
+
         if ($user) {
             $this->id = $user->id;
             $this->name = $user->name;
             $this->email = $user->email;
-            $this->phone_number = $user->phone_number;
-            $this->password = '';
+            $this->password = $user->password;
         }
     }
 
     public function updateUser()
     {
         $this->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $this->id,
-            'phone_number' => 'required|string|max:20',
+            'name' => 'string|max:255',
+            'email' => 'email|unique:users,email,' . $this->id,
             'password' => 'nullable|min:6',
         ]);
 
         $user = User::find($this->id);
-        
+
         if ($user) {
             $updateData = [
                 'name' => $this->name,
                 'email' => $this->email,
-                'phone_number' => $this->phone_number,
             ];
-            
-            // Only update password if provided
+
             if (!empty($this->password)) {
                 $updateData['password'] = bcrypt($this->password);
             }
-            
+
             $user->update($updateData);
 
             session()->flash('success', 'Admin has been updated successfully');
-            $this->reset(['id', 'name', 'email', 'phone_number', 'password']);
+            $this->reset(['id', 'name', 'email', 'password']);
         }
     }
 
@@ -106,7 +101,7 @@ class UserComponent extends Component
     public function destroy()
     {
         $user = User::find($this->id);
-        
+
         if ($user) {
             $user->delete();
             session()->flash('success', 'Admin has been deleted successfully');

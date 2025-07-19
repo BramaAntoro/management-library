@@ -70,13 +70,6 @@
                             <input type="email" class="form-control" wire:model="email">
                         </div>
                         <div class="form-group mb-2">
-                            <label for="">Phone Number</label>
-                            @error('phone_number')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                            <input type="number" class="form-control" wire:model="phone_number">
-                        </div>
-                        <div class="form-group mb-2">
                             <label for="">Password</label>
                             @error('password')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -117,13 +110,6 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <input type="email" class="form-control" wire:model="email">
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="">Phone Number</label>
-                            @error('phone_number')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                            <input type="number" class="form-control" wire:model="phone_number">
                         </div>
                         <div class="form-group mb-2">
                             <label for="">Password</label>
