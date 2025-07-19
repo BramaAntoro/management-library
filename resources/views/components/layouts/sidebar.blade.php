@@ -4,7 +4,7 @@
         <li class="nav-item mb-2"><a href="#" class="nav-link text-white">🏠 Dashboard</a></li>
         <li class="nav-item mb-2"><a href="{{ route('member') }}" class="nav-link text-white">👥 Manage Members</a></li>
         <li class="nav-item mb-2"><a href="{{ route('book') }}" class="nav-link text-white">📘 Manage Books</a></li>
-        <li class="nav-item mb-2"><a href="#" class="nav-link text-white">📝 Manage Loans</a></li>
+        <li class="nav-item mb-2"><a href="{{ route('borrower') }}" class="nav-link text-white">📝 Manage Loans</a></li>
         <li class="nav-item mb-2"><a href="#" class="nav-link text-white">✔ Manage Returns</a></li>
         <li class="nav-item mb-2"><a href="{{ route('category') }}" class="nav-link text-white">🏷 Manage Categories</a></li>
         <li class="nav-item"><a href="{{ route('user') }}" class="nav-link text-white">🧑‍💼 Manage Staff</a></li>

@@ -12,12 +12,12 @@ class Borrower extends Model
 
     protected $fillable = ['book_id', 'user_id', 'loan_date', 'return_date', 'status'];
 
-    public function users(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function books(): BelongsTo
+    public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
     }
