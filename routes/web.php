@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\CategoryComponent;
 use App\Livewire\HomeComponent;
 use App\Livewire\LoginComponent;
 use App\Livewire\MemberComponent;
@@ -14,4 +15,6 @@ Route::get('/logout', [LoginComponent::class, 'logout'])->name('logout');
 Route::get('/user', UserComponent::class)->name('user')->middleware('auth');
 
 Route::get('/member', MemberComponent::class)->name('member')->middleware('auth');
+
+Route::get('/categories', CategoryComponent::class)->name('category')->middleware('auth');
 
