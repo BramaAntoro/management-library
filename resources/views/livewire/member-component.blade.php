@@ -3,7 +3,7 @@
         Manage Member
     </div>
     <div class="card-body">
-        <input type="text" wire:model.live="search" class="form-control w-50 m-2" placeholder="Search data admin">
+        <input type="text" wire:model.live="search" class="form-control w-50 m-2" placeholder="Search data member">
 
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">
