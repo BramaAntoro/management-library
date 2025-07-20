@@ -53,7 +53,8 @@ class BookComponent extends Component
             'publisher' => $this->publisher,
             'isbn' => $this->isbn,
             'published_at' => $this->published_at,
-            'quantity' => $this->quantity
+            'quantity' => $this->quantity,
+            'total_borrowed' => 0
         ]);
 
         session()->flash('success', 'Book has been saved successfully');
@@ -113,6 +114,12 @@ class BookComponent extends Component
         $book = Book::find($this->id);
 
         if ($book) {
+            // Check if book has active borrowers
+            if ($book->total_borrowed > 0) {
+                session()->flash('error', 'Cannot delete book with active borrowers');
+                return;
+            }
+
             $book->delete();
             session()->flash('success', 'Book has been deleted successfully');
             $this->reset('id');

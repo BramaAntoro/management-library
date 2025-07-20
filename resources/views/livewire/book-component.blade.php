@@ -9,6 +9,10 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+        @if (session()->has('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -20,7 +24,9 @@
                         <th>Publisher</th>
                         <th>ISBN</th>
                         <th>Published At</th>
-                        <th>Quantity</th>
+                        <th>Total Copy</th>
+                        <th>Total Dipinjam</th>
+                        <th>Available</th>
                         <th>Process</th>
                     </tr>
                 </thead>
@@ -30,11 +36,19 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->category->name ?? '-' }}</td>
-                            <td>{{ $book->writer }}</td>
-                            <td>{{ $book->publisher }}</td>
-                            <td>{{ $book->isbn }}</td>
-                            <td>{{ $book->published_at }}</td>
-                            <td>{{ $book->quantity }}</td>
+                            <td>{{ $book->writer ?? '-' }}</td>
+                            <td>{{ $book->publisher ?? '-' }}</td>
+                            <td>{{ $book->isbn ?? '-' }}</td>
+                            <td>{{ \Carbon\Carbon::parse($book->published_at)->format('d/m/Y') }}</td>
+                            <td>
+                                <span class="badge bg-primary">{{ $book->quantity }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-warning">{{ $book->total_borrowed ?? 0 }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-success">{{ $book->quantity - ($book->total_borrowed ?? 0) }}</span>
+                            </td>
                             <td>
                                 <a href="#" wire:click="update({{ $book->id }})" class="btn btn-sm btn-info"
                                     data-bs-toggle="modal" data-bs-target="#updatePage">Update</a>
@@ -93,9 +107,9 @@
                             <input type="date" class="form-control" wire:model="published_at">
                         </div>
                         <div class="form-group mb-2">
-                            <label>Quantity</label>
+                            <label>Total Copy</label>
                             @error('quantity') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                            <input type="number" class="form-control" wire:model="quantity">
+                            <input type="number" class="form-control" wire:model="quantity" min="1">
                         </div>
                     </form>
                 </div>
@@ -146,8 +160,8 @@
                             <input type="date" class="form-control" wire:model="published_at">
                         </div>
                         <div class="form-group mb-2">
-                            <label>Quantity</label>
-                            <input type="number" class="form-control" wire:model="quantity">
+                            <label>Total Copy</label>
+                            <input type="number" class="form-control" wire:model="quantity" min="1">
                         </div>
                     </form>
                 </div>
